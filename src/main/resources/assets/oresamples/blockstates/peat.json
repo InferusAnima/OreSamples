@@ -1,0 +1,38 @@
+{
+  "variants": {
+    "bottom=true": [
+      {
+        "model": "oresamples:block/peat"
+      },
+      {
+        "model": "oresamples:block/peat",
+        "y": 90
+      },
+      {
+        "model": "oresamples:block/peat",
+        "y": 180
+      },
+      {
+        "model": "oresamples:block/peat",
+        "y": 270
+      }
+    ],
+    "bottom=false": [
+      {
+        "model": "oresamples:block/peat_top"
+      },
+      {
+        "model": "oresamples:block/peat_top",
+        "y": 90
+      },
+      {
+        "model": "oresamples:block/peat_top",
+        "y": 180
+      },
+      {
+        "model": "oresamples:block/peat_top",
+        "y": 270
+      }
+    ]
+  }
+}

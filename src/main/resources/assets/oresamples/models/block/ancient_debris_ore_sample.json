@@ -1,0 +1,9 @@
+{
+  "parent": "oresamples:block/ore_sample",
+  "textures": {
+    "particle": "minecraft:block/netherrack",
+    "ore": "oresamples:blocks/ancient_debris_ore",
+    "_ore": "minecraft:block/ancient_debris_side",
+    "stone": "minecraft:block/netherrack"
+  }
+}

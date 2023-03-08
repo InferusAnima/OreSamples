@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "oresamples:block/bituminous_coal_ore_sample"
+      }
+    ]
+  }
+}

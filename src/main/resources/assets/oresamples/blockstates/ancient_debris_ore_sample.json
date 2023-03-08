@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "oresamples:block/ancient_debris_ore_sample"
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "oresamples:items/lignite_coal_coke"
+  }
+}

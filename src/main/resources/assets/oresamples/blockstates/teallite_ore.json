@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "oresamples:block/teallite_ore"
+      }
+    ]
+  }
+}

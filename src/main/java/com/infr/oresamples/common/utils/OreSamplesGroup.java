@@ -4,6 +4,7 @@ import com.infr.oresamples.common.blocks.Types.OreSamples;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class OreSamplesGroup extends CreativeModeTab {
     private static OreSamplesGroup instance;
@@ -35,8 +36,10 @@ public class OreSamplesGroup extends CreativeModeTab {
             counter = 0;
         }
 
+        com.infr.oresamples.OreSamples.getInstance().LOGGER.info("KISS" + ForgeRegistries.BLOCKS.tags().getTagNames().toList());
+
         if (System.currentTimeMillis() - lastTick > 1000L) {
-            display = new ItemStack(OreSamples.values()[counter].getSample().get());
+            display = new ItemStack(OreSamples.values()[counter].getSample());
             counter = counter == (OreSamples.values().length - 1) ? 0 : counter + 1;
             lastTick = System.currentTimeMillis();
         }

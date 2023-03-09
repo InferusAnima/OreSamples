@@ -11,7 +11,7 @@ public class Types {
         GOLD("gold");
 
         private final String unlocalizedName;
-        private RegistryObject<Block> sample;
+        private Block sample;
 
         OreSamples(String unlocalizedName) {
             this.unlocalizedName = unlocalizedName;
@@ -26,11 +26,11 @@ public class Types {
         }
 
         @Nullable
-        public RegistryObject<Block> getSample() {
+        public Block getSample() {
             return this.sample;
         }
 
-        public void setSample(RegistryObject<Block> b) {
+        public void setSample(Block b) {
             this.sample = b;
         }
     }

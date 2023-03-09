@@ -33,9 +33,10 @@ public class SampleBlock extends Block implements SimpleWaterloggedBlock {
     private static final Properties BASE_PROPS = Properties.of(Material.DIRT, MaterialColor.STONE)
             .strength(0.125F, 2F).sound(SoundType.GRAVEL).dynamicShape();
 
-    public SampleBlock() {
+    public SampleBlock(String registry_name) {
         super(BASE_PROPS);
         this.registerDefaultState(this.getStateDefinition().any().setValue(WATERLOGGED, Boolean.FALSE));
+        this.setRegistryName(registry_name);
     }
 
     @Override

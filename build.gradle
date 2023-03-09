@@ -16,7 +16,6 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 
 
-version = '1.0'
 group = 'com.infr.oresamples' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "OreSamples-${game_version}-${mod_version}"
 

@@ -7,8 +7,14 @@ import javax.annotation.Nullable;
 
 public class Types {
     public enum OreSamples {
+        COAL("coal"),
+        LAPIS("lapis"),
+        REDSTONE("redstone"),
+        COPPER("copper"),
+        IRON("iron"),
+        GOLD("gold"),
         DIAMOND("diamond"),
-        GOLD("gold");
+        EMERALD("emerald");
 
         private final String unlocalizedName;
         private RegistryObject<Block> sample;

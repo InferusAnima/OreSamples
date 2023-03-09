@@ -2,7 +2,7 @@
   "parent": "oresamples:block/ore_sample",
   "textures": {
     "particle": "minecraft:block/gravel",
-    "ore": "minecraft:block/diamond_ore",
+    "ore": "minecraft:block/copper_ore",
     "stone": "minecraft:block/gravel"
   }
 }

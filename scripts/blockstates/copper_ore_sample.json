@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "oresamples:block/diamond_ore_sample"
+        "model": "oresamples:block/copper_ore_sample"
       }
     ]
   }

@@ -1,5 +1,11 @@
 {
-  "block.oresamples.diamond_ore_sample": "Diamond Sample",
+  "block.oresamples.coal_ore_sample": "Coal Sample",
+  "block.oresamples.lapis_ore_sample": "Lapis Lazuli Sample",
+  "block.oresamples.redstone_ore_sample": "Redstone Sample",
+  "block.oresamples.copper_ore_sample": "Copper Sample",
+  "block.oresamples.iron_ore_sample": "Iron Sample",
   "block.oresamples.gold_ore_sample": "Gold Sample",
+  "block.oresamples.diamond_ore_sample": "Diamond Sample",
+  "block.oresamples.emerald_ore_sample": "Emerald Sample",
   "itemGroup.oresamples.name": "§8OreSamples§r"
 }

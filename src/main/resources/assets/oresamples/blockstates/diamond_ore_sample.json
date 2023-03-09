@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "oresamples:block/azurite_ore"
+        "model": "oresamples:block/diamond_ore_sample"
       }
     ]
   }

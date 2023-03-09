@@ -1,8 +1,0 @@
-{
-  "parent": "oresamples:block/ore_sample",
-  "textures": {
-    "particle": "minecraft:block/gravel",
-    "ore": "oresamples:blocks/teallite_ore",
-    "stone": "minecraft:block/gravel"
-  }
-}

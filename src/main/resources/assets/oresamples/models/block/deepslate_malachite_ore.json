@@ -1,4 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": { "all": "oresamples:blocks/deepslate_malachite_ore" }
-}

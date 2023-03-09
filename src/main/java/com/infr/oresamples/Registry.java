@@ -6,10 +6,6 @@ import com.infr.oresamples.common.utils.OreSamplesGroup;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -29,26 +25,25 @@ public class Registry {
 
     private static void registerBlocks() {
 
-        for (Types.Ores o : Types.Ores.values()) {
-            registerOre(o);
+        for (Types.OreSamples o : Types.OreSamples.values()) {
+            registerSample(o);
         }
+
+//        for (Block ore : ForgeRegistries.BLOCKS.getValues()) {
+//            if (ForgeRegistries.BLOCKS.tags().getTag(Tags.Blocks.ORES).contains(ore)) {
+//                OreSamples.getInstance().LOGGER.info("LMAO" + ore.getRegistryName());
+//                registerSample(ore);
+//            }
+//        }
 
     }
 
-    private static void registerOre(Types.Ores o) {
-        BlockBehaviour.Properties stoneOreProperties = BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE)
-                .strength(5.0F, 10F).sound(SoundType.STONE).requiresCorrectToolForDrops();
-
-        final String ORE_REGISTRY_NAME = o.getUnlocalizedName().toLowerCase() + "_ore";
+    private static void registerSample(Types.OreSamples o) {
         final String SAMPLE_REGISTRY_NAME = o.getUnlocalizedName().toLowerCase() + "_ore_sample";
 
-        RegistryObject<Block> block = BLOCKS.register(ORE_REGISTRY_NAME,
-                () -> new OreBlock(stoneOreProperties, o.getXp()));
         RegistryObject<Block> sample = BLOCKS.register(SAMPLE_REGISTRY_NAME, SampleBlock::new);
-        o.setBlock(block);
         o.setSample(sample);
 
-        ITEMS.register(ORE_REGISTRY_NAME, itemOf(block));
         ITEMS.register(SAMPLE_REGISTRY_NAME, itemOf(sample));
     }
 

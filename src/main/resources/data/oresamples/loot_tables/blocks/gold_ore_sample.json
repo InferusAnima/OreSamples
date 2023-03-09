@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "geolosys:gold_cluster"
+          "name": "minecraft:raw_gold"
         }
       ],
       "conditions": [

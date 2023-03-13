@@ -14,7 +14,8 @@ public class Types {
         IRON("iron"),
         GOLD("gold"),
         DIAMOND("diamond"),
-        EMERALD("emerald");
+        EMERALD("emerald"),
+        ZINC("zinc");
 
         private final String unlocalizedName;
         private RegistryObject<Block> sample;

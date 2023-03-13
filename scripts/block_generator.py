@@ -5,26 +5,50 @@
 import json
 import sys
 import os
+import shutil
+import pathlib
 
 from pip._vendor.colorama import Fore
 
 
+def remove_content(folder: str):
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
+
+
 def generate_states(states: list) -> None:
-    os.makedirs("./blockstates/")
+    path = "../src/main/resources/assets/oresamples/blockstates"
+    path = os.path.join(pathlib.Path(__file__).parent.resolve(), path)
+    if os.path.exists(path):
+        remove_content(path)
+        os.rmdir(path)
+    os.makedirs(path)
     for state in states:
         state = f'{state[0].split(":")[1]}_sample'
         json_doc = {"variants": {"": [{"model": f"oresamples:block/{state}"}]}}
-        with open(f"./blockstates/{state}.json", "w") as file:
+        with open(f"{path}/{state}.json", "w") as file:
             file.write(json.dumps(json_doc, indent=2))
             print(
                 Fore.BLUE
-                + f"Wrote ./blockstates/{state}.json to disk"
+                + f"Wrote {path}/{state}.json to disk"
                 + Fore.RESET
             )
 
 
 def generate_block_models(states: list) -> None:
-    os.makedirs("./models/block/")
+    path = "../src/main/resources/assets/oresamples/models/block"
+    path = os.path.join(pathlib.Path(__file__).parent.resolve(), path)
+    if os.path.exists(path):
+        remove_content(path)
+        os.rmdir(path)
+    os.makedirs(path)
     for state in states:
         state = state[0]
         mod = state.split(":")[0]
@@ -33,23 +57,38 @@ def generate_block_models(states: list) -> None:
             "parent": "oresamples:block/ore_sample",
             "textures": {"particle": "minecraft:block/gravel", "ore": f"{mod}:block/{state}", "stone": "minecraft:block/gravel"},
         }
-        with open(f"./models/block/{state}_sample.json", "w") as file:
+        with open(f"{path}/{state}_sample.json", "w") as file:
             file.write(json.dumps(json_doc, indent=2))
-            print(Fore.BLUE + f"Wrote ./models/block/{state}.json to disk" + Fore.RESET)
+            print(Fore.BLUE + f"Wrote {path}/{state}_sample.json to disk" + Fore.RESET)
+    with open(os.path.join(pathlib.Path(__file__).parent.resolve(), "ore_sample.json"), "r") as file:
+        ore_sample = json.load(file)
+    with open(f"{path}/ore_sample.json", "w") as file:
+            file.write(json.dumps(ore_sample, indent=2))
+            print(Fore.BLUE + f"Wrote {path}/ore_sample.json to disk" + Fore.RESET)
 
 
 def generate_item_models(states: list) -> None:
-    os.makedirs("./models/item/")
+    path = "../src/main/resources/assets/oresamples/models/item"
+    path = os.path.join(pathlib.Path(__file__).parent.resolve(), path)
+    if os.path.exists(path):
+        remove_content(path)
+        os.rmdir(path)
+    os.makedirs(path)
     for state in states:
         state = f'{state[0].split(":")[1]}_sample'
         json_doc = {"parent": f"oresamples:block/{state}"}
-        with open(f"./models/item/{state}.json", "w") as file:
+        with open(f"{path}/{state}.json", "w") as file:
             file.write(json.dumps(json_doc, indent=2))
-            print(Fore.BLUE + f"Wrote ./models/item/{state}.json to disk" + Fore.RESET)
+            print(Fore.BLUE + f"Wrote {path}/{state}.json to disk" + Fore.RESET)
 
 
 def generate_loot_tables(states: list) -> None:
-    os.makedirs("./loot_tables/blocks/")
+    path = "../src/main/resources/data/oresamples/loot_tables/blocks"
+    path = os.path.join(pathlib.Path(__file__).parent.resolve(), path)
+    if os.path.exists(path):
+        remove_content(path)
+        os.rmdir(path)
+    os.makedirs(path)
     for state in states:
         item = state[1]
         state = f'{state[0].split(":")[1]}_sample'
@@ -73,9 +112,9 @@ def generate_loot_tables(states: list) -> None:
             ]
         }
 
-        with open(f"./loot_tables/blocks/{state}.json", "w") as file:
+        with open(f"{path}/{state}.json", "w") as file:
             file.write(json.dumps(json_doc, indent=2))
-            print(Fore.BLUE + f"Wrote ./loot_tables/blocks/{state}.json to disk" + Fore.RESET)
+            print(Fore.BLUE + f"Wrote {path}/{state}.json to disk" + Fore.RESET)
 
 
 def main(block_state: bool, item_model: bool, block_model: bool, loot_table: bool) -> None:
@@ -96,6 +135,7 @@ def main(block_state: bool, item_model: bool, block_model: bool, loot_table: boo
         ("minecraft:gold_ore", "minecraft:raw_gold"),
         ("minecraft:diamond_ore", "minecraft:diamond"),
         ("minecraft:emerald_ore", "minecraft:emerald"),
+        ("create:zinc_ore", "create:raw_zinc"),
     ]
 
     if block_state:

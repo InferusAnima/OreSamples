@@ -7,5 +7,6 @@
   "block.oresamples.gold_ore_sample": "Gold Sample",
   "block.oresamples.diamond_ore_sample": "Diamond Sample",
   "block.oresamples.emerald_ore_sample": "Emerald Sample",
+  "block.oresamples.zinc_ore_sample": "Zinc Sample",
   "itemGroup.oresamples.name": "§8OreSamples§r"
 }

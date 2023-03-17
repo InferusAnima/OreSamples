@@ -1,6 +1,7 @@
 package com.infr.oresamples.common.blocks;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -10,13 +11,14 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
@@ -40,7 +42,7 @@ public class SampleBlock extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        if (context.getLevel().getBlockState(context.getClickedPos()).getBlock() == Blocks.WATER) {
+        if (context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER) {
             return this.defaultBlockState().setValue(WATERLOGGED, Boolean.TRUE);
         }
         return this.defaultBlockState();
@@ -66,8 +68,9 @@ public class SampleBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Nonnull
+    @SuppressWarnings("deprecation")
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn,
-            BlockHitResult hit) {
+                                 BlockHitResult hit) {
         if (!player.isCrouching()) {
             worldIn.destroyBlock(pos, true);
             player.swing(handIn);
@@ -77,6 +80,7 @@ public class SampleBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         BlockState below = worldIn.getBlockState(pos.below());
         return below.isSolidRender(worldIn, pos.below());
@@ -91,6 +95,54 @@ public class SampleBlock extends Block implements SimpleWaterloggedBlock {
     @Nonnull
     public OffsetType getOffsetType() {
         return OffsetType.XZ;
+    }
+
+    @Override
+    @Nonnull
+    @SuppressWarnings("deprecation")
+    public FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos,
+                                boolean isMoving) {
+        super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
+        if (!this.canSurvive(state, worldIn, pos)) {
+            worldIn.destroyBlock(pos, true);
+        }
+
+        if (state.getValue(WATERLOGGED)) {
+            worldIn.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
+        }
+    }
+
+    @Override
+    public boolean isRandomlyTicking(BlockState state) {
+        return state.hasProperty(WATERLOGGED) && state.getValue(WATERLOGGED).equals(Boolean.FALSE);
+    }
+
+    @SuppressWarnings("deprecation")
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+        if (!worldIn.isAreaLoaded(pos, 1)) {
+            return;
+        }
+
+        BlockState[] neighbors = new BlockState[] { worldIn.getBlockState(pos.offset(1, 0, 0)),
+                worldIn.getBlockState(pos.offset(-1, 0, 0)), worldIn.getBlockState(pos.offset(0, 0, 1)),
+                worldIn.getBlockState(pos.offset(0, 0, -1)) };
+
+        int waterNeighbors = 0;
+        for (BlockState b : neighbors) {
+            if (b.getFluidState() == Fluids.WATER.getSource(false)) {
+                waterNeighbors++;
+            }
+        }
+
+        if (waterNeighbors > 1) {
+            worldIn.setBlock(pos, state.setValue(WATERLOGGED, Boolean.TRUE), 2 | 16);
+        }
     }
 
 }
